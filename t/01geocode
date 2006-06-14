@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+
+use lib qw|../lib|;
+
+use Geo::Coder::Google;
+use Data::Dumper;
+
+# Get this from: http://www.google.com/apis/maps/signup.html
+my $API_KEY = "";
+
+my $geocoder = Geo::Coder::Google->new({ key => $API_KEY });
+
+my $address = $ARGV[0] || '1600 Pennsylvania Ave Washington DC';
+( $gc ) = $geocoder->geocode($address, $ARGV[1] || 'xml');
+
+print Dumper $gc;
