@@ -1,14 +1,22 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Geo-Coder-Google
-version:      0.03
-version_from: lib/Geo/Coder/Google.pm
-installdirs:  site
+--- #YAML:1.0
+name:               Geo-Coder-Google
+version:            0.04
+abstract:           ~
+author:  []
+license:            unknown
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
 requires:
-    Encode:                        0
-    JSON::Syck:                    0.1
-    LWP:                           5.5
-    Test::More:                    0.32
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30
+    Encode:      0
+    JSON::Syck:  0.1
+    LWP:         5.5
+    Test::More:  0.32
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.48
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
