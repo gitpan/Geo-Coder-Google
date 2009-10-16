@@ -1,7 +1,7 @@
 package Geo::Coder::Google;
 
 use strict;
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use Carp;
 use Encode;
@@ -20,8 +20,9 @@ sub new {
     my $host     = delete $param{host}     || 'maps.google.com';
     my $language = delete $param{language};
     my $gl       = delete $param{gl};
+    my $oe       = delete $param{oe}       || 'utf8';
 
-    bless { key => $key, ua => $ua, host => $host, language => $language, gl => $gl }, $class;
+    bless { key => $key, ua => $ua, host => $host, language => $language, gl => $gl, oe => $oe }, $class;
 }
 
 sub ua {
@@ -53,6 +54,7 @@ sub geocode {
     my %query_parameters = (q => $location, output => 'json', key => $self->{key});
     $query_parameters{hl} = $self->{language} if defined $self->{language};
     $query_parameters{gl} = $self->{gl} if defined $self->{gl};
+    $query_parameters{oe} = $self->{oe};
     $uri->query_form(%query_parameters);
 
     my $res = $self->{ua}->get($uri);
@@ -103,6 +105,7 @@ Geo::Coder::Google provides a geocoding functionality using Google Maps API.
   $geocoder = Geo::Coder::Google->new(apikey => 'Your API Key', host => 'maps.google.co.jp');
   $geocoder = Geo::Coder::Google->new(apikey => 'Your API Key', language => 'ru');
   $geocoder = Geo::Coder::Google->new(apikey => 'Your API Key', gl => 'ca');
+  $geocoder = Geo::Coder::Google->new(apikey => 'Your API Key', oe => 'latin1');
 
 Creates a new geocoding object. You should pass a valid Google Maps
 API Key as C<apikey> parameter.
@@ -118,13 +121,16 @@ guarantee that every request returns translated data.
 
 You can also set C<gl> parameter to set country code (e.g. I<ca> for Canada).
 
+You can ask for a character encoding other than utf-8 by setting the I<oe>
+parameter, but this is not recommended.
+
 =item geocode
 
   $location = $geocoder->geocode(location => $location);
   @location = $geocoder->geocode(location => $location);
 
 Queries I<$location> to Google Maps geocoding API and returns hash
-refernece returned back from API server. When you cann the method in
+reference returned back from API server. When you cann the method in
 an array context, it returns all the candidates got back, while it
 returns the 1st one in a scalar context.
 
