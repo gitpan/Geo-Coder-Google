@@ -22,6 +22,8 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Digest::HMAC_SHA1" : 0,
+            "MIME::Base64" : 0,
             "Test::More" : "0.32"
          }
       },
@@ -53,5 +55,5 @@
          "url" : "https://github.com/miyagawa/geo-coder-google"
       }
    },
-   "version" : "0.08"
+   "version" : "0.09"
 }

@@ -1,10 +1,9 @@
 use strict;
 use utf8;
-use Test::More;
+use Test::More tests => 8;
 use Encode ();
 use Geo::Coder::Google;
 
-plan tests => 6;
 
 {
     my $geocoder = Geo::Coder::Google->new(apiver => 3);
@@ -28,6 +27,19 @@ SKIP: {
     my $geocoder_us = Geo::Coder::Google->new(apiver => 3);
     my $location_us = $geocoder_us->geocode('Toledo');
     like $location_us->{geometry}{location}{lng}, qr/-83.555212/;
+}
+
+# URL signing
+{
+    # sample clientID from http://code.google.com/apis/maps/documentation/webservices/index.html#URLSigning
+    my $client = $ENV{GMAP_CLIENT};
+    my $key    = $ENV{GMAP_KEY};
+    my $geocoder = Geo::Coder::Google->new(
+        apiver => 3, client => $client, key => $key 
+    );
+    my $location = $geocoder->geocode(location => "New York");
+    is($location->{geometry}{location}{lat}, 40.7143528, "Latitude for NYC");
+    is($location->{geometry}{location}{lng}, -74.0059731, "Longitude for NYC");
 }
 
 SKIP: {
