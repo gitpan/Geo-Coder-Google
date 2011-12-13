@@ -2,7 +2,7 @@ package Geo::Coder::Google::V3;
 
 use strict;
 use warnings;
-our $VERSION = '0.09_01';
+our $VERSION = '0.09_02';
 
 use Carp;
 use Encode;
@@ -61,7 +61,7 @@ sub geocode {
     $query_parameters{language} = $self->{language} if defined $self->{language};
     $query_parameters{region} = $self->{region} if defined $self->{region};
     $query_parameters{oe} = $self->{oe};
-    $query_parameters{sensor} = $self->{sensor} ? JSON::true : JSON::false;
+    $query_parameters{sensor} = $self->{sensor} ? 'true' : 'false';
     $uri->query_form(%query_parameters);
     my $url = $uri->as_string;
 
