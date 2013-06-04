@@ -4,7 +4,7 @@
       "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "ExtUtils::MakeMaker version 6.64, CPAN::Meta::Converter version 2.120921",
+   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.131490",
    "license" : [
       "perl_5"
    ],
@@ -56,5 +56,5 @@
          "url" : "https://github.com/miyagawa/geo-coder-google"
       }
    },
-   "version" : "0.11_03"
+   "version" : "0.11_04"
 }
