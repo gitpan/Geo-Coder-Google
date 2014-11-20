@@ -2,7 +2,7 @@ package Geo::Coder::Google::V3;
 
 use strict;
 use warnings;
-our $VERSION = '0.14';
+our $VERSION = '0.14_01';
 
 use Carp;
 use Encode;
@@ -78,7 +78,7 @@ sub geocode {
 
     my $loc_param = $param{reverse} ? 'latlng' : 'address';
 
-    my $uri = URI->new("http://$self->{host}/maps/api/geocode/json");
+    my $uri = URI->new("https://$self->{host}/maps/api/geocode/json");
     my %query_parameters = ($loc_param => $location);
     $query_parameters{language} = $self->{language} if defined $self->{language};
     $query_parameters{region} = $self->{region} if defined $self->{region};
@@ -86,11 +86,13 @@ sub geocode {
     $query_parameters{sensor} = $self->{sensor} ? 'true' : 'false';
     my $components_params = $self->_get_components_query_params;
     $query_parameters{components} = $components_params if defined $components_params;
+    $query_parameters{key} = $self->{key} if defined $self->{key};
     $uri->query_form(%query_parameters);
     my $url = $uri->as_string;
 
     # Process Maps Premier account info
     if ($self->{client} and $self->{key}) {
+        delete $query_parameters{key};
         $query_parameters{client} = $self->{client};
         $uri->query_form(%query_parameters);
 
